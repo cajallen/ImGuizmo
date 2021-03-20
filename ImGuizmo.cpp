@@ -2612,7 +2612,7 @@ namespace ImGuizmo
                // draw face with lighter color
                if (iPass)
                {
-                  gContext.mDrawList->AddConvexPolyFilled(faceCoordsScreen, 4, (directionColor[iFace]) | (isInside ? 0x080808 : 0));
+                  gContext.mDrawList->AddConvexPolyFilled(faceCoordsScreen, 4, directionColor[iFace]);
                   if (boxes[boxCoordInt])
                   {
                      gContext.mDrawList->AddConvexPolyFilled(faceCoordsScreen, 4, 0x8060A0F0);
@@ -2657,6 +2657,7 @@ namespace ImGuizmo
             }
          }
       }
+      bool ret = false;
       if (interpolationFrames)
       {
          interpolationFrames--;
@@ -2676,6 +2677,10 @@ namespace ImGuizmo
       if (isInside) {
           ImGuiID id = w->GetID("camera_3d");
           ImGui::SetActiveID(id, w);
+      }
+
+      if (isInside) {
+          ImGui::SetHoveredID(ImGui::GetID("camera_angle_widget"));
       }
 
       // drag view
@@ -2718,6 +2723,8 @@ namespace ImGuizmo
 
          vec_t newEye = camTarget + newDir * length;
          LookAt(&newEye.x, &camTarget.x, &referenceUp.x, view);
+
+         ret = true;
       }
 
       // restore view/projection because it was used to compute ray
