@@ -2498,7 +2498,6 @@ namespace ImGuizmo
        ImGuiWindow* w = ImGui::GetCurrentWindow();
        if (w->SkipItems) return false;
 
-       bool ret = false;
       static bool isDraging = false;
       static bool isClicking = false;
       static bool isInside = false;
@@ -2674,10 +2673,6 @@ namespace ImGuizmo
          ret = true;
       }
       isInside = ImRect(position, position + size).Contains(io.MousePos);
-      if (isInside) {
-          ImGuiID id = w->GetID("camera_3d");
-          ImGui::SetActiveID(id, w);
-      }
 
       if (isInside) {
           ImGui::SetHoveredID(ImGui::GetID("camera_angle_widget"));
